@@ -15,7 +15,7 @@ const Signup = () => {
     function login(e){
         e.preventDefault()
         console.log('clicked')
-        navigate('/dashboard')
+        navigate('/dashboard/home')
     }
 
     function signUp(e){
