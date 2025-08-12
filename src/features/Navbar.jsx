@@ -1,19 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { RxDoubleArrowLeft } from "react-icons/rx";
-import { motion } from "motion/react"
+import { AnimatePresence, motion } from "motion/react"
 
-const Navbar = ({rotated,rotateArrow}) => {
+const Navbar = ({rotated,rotateArrow,showMessages}) => {
 
     const [hamburger, setHamburger] =  useState(false)
+    const [messageHover, setMessageHover] = useState(false)
+    const [profileHover, setProfileHover] = useState(false)
+    const [profileNotViewed, setProfileNotViewed] = useState(true)
+    const popUpRef = useRef()
+    const showPopUpRef = useRef()
+
+    function showHamburger(){
+        setHamburger(prev=>!prev)
+        showMessages()
+    }
+
+    useEffect(()=>{
+        function showPopUp(e){
+            if(showPopUpRef.current.contains(e.target)) return setProfileHover(prev=>!prev)
+            if(popUpRef.current && !popUpRef.current.contains(e.target)) setProfileHover(false)
+        }
+        window.addEventListener('mousedown',showPopUp)
+        return () => window.removeEventListener('mousedown',showPopUp)
+    },[])
     
   return (
-    <div className='relative w-full h-18 bg-black flex items-center justify-between'>
+    <div className='relative w-full pl-2 h-18 bg-black flex items-center justify-start sm:justify-between'>
         <motion.div
-            animate={{
-                x: rotated ? 0 : 32,
-                transition: {type:'spring', stiffness: 300, damping: 15}
-            }}
-            className={`flex gap-30 w-75 items-center pr-3`}>
+            className={`flex gap-0 sm:gap-30 w-auto md:w-75 items-center pr-3`}>
             <img className='w-25 h-15 cursor-pointer' src="https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg" alt="" />
             <motion.span 
                 whileHover={{
@@ -26,21 +41,55 @@ const Navbar = ({rotated,rotateArrow}) => {
                     transition:{duration : 0.3}
                 }}
                 onClick={rotateArrow}
-                className='text-white text-2xl cursor-pointer px-4'><RxDoubleArrowLeft />
+                className='text-white text-2xl cursor-pointer px-0 sm:px-4'><RxDoubleArrowLeft />
             </motion.span>
         </motion.div>
-        <div className={`flex-1 flex justify-end px-5 items-center ${hamburger ? 'gap-0' : 'gap-5'}`}>
-            <div className='w-10 h-10 bg-white rounded-full cursor-pointer'>
+        <div className={`relative flex-1 flex justify-end px-5 items-center ${hamburger ? 'gap-0' : 'gap-5'}`}>
+            <motion.div
+                onClick={()=>setProfileNotViewed(false)}
+                whileHover={{scale:1.2}}
+                ref={showPopUpRef}
+                className=' absolute right-22 w-10 h-10 bg-white rounded-full cursor-pointer mr-4'>
                 <img className='w-full h-full object-cover rounded-full object-top' src="https://cdn.pixabay.com/photo/2020/10/22/06/18/vegeta-5675018_1280.png" alt="" />
-            </div>
-            <div 
-                onClick={()=>setHamburger(prev=>!prev)}
-                className={`flex ${hamburger ? 'flex-row' : 'flex-col'} flex-col gap-2 cursor-pointer p-4`}>
+            </motion.div>
+            {
+                profileNotViewed &&(
+                <motion.span
+                    className='absolute hidden sm:inline top-12 z-[10] right-28 sm:top-2 sm:right-36 rounded-[20px] text-center text-gray-900 bg-white px-2 py-[1px]  truncate'
+                    animate={{
+                        scaleX:[0,1,0]
+                    }}
+                    transition={{repeat: Infinity, duration: 3, repeatType: 'loop', ease: "easeOut"}}
+                >
+                Click Me...!
+                </motion.span>
+                )
+                }
+            <AnimatePresence>
+               {profileHover && (
+                 <motion.div
+                    ref={popUpRef}
+                    className='absolute w-40 h-50 top-[60px] right-30 bg-red-300'
+                    initial={{scale:0, opacity:0}}
+                    exit={{scale:0, opacity:0}}
+                    animate={{
+                        scale:1,
+                        opacity: profileHover ? 1 : 0
+                    }}
+            >      
+            </motion.div>
+               )}
+            </AnimatePresence>
+            <motion.div 
+                onHoverStart={()=>setMessageHover(true)}
+                onHoverEnd={()=>setMessageHover(false)}
+                onClick={showHamburger}
+                className={`relative flex ${hamburger ? 'flex-row' : 'flex-col'} flex-col gap-2 cursor-pointer p-4`}>
                 <motion.span
                     animate={hamburger?{
                         rotate:130,
                         x:40,
-                        duration:0.5,
+                        scale:1.1,
                         transition: {type:'spring', stiffness: 300, damping : 15}
                     }:{}}
                     className='w-8 h-[2px] bg-white'></motion.span>
@@ -49,11 +98,40 @@ const Navbar = ({rotated,rotateArrow}) => {
                     animate={hamburger?{
                         rotate:-130,
                         x:0,
-                        duration:0.5,
+                        scale:1.1,
                         transition: {type:'spring', stiffness: 300, damping : 15}
                     }:{}}
                     className='w-8 h-[2px] bg-white'></motion.span>
-            </div>
+
+            </motion.div>
+                <motion.div 
+                    animate={ messageHover ?{
+                        opacity: 1,
+                        x:0,
+                        scale:1
+                    }:{
+                        opacity: 0,
+                        x:10,
+                        scale:0.8
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className='w-30 h-10 bg-yellow-300 opacity-0 top-[67px] right-12 absolute'>
+                        <motion.span
+                            className='relative block'
+                            animate={messageHover ?{
+                                y:5,
+                                x:30,
+                                opacity:1,
+                                scale:1.2,
+                                transition: {type: 'spring', stiffness: 300, damping: 10 }
+                            }:{
+                                y:40,
+                                opacity:0
+                            }}                            
+                        >
+                            Messages
+                        </motion.span>
+                </motion.div>
         </div>
     </div>
   )
