@@ -7,6 +7,8 @@ import { MdAttachMoney } from "react-icons/md";
 import { HiOutlineCircleStack } from "react-icons/hi2";
 import { BsBank2 } from "react-icons/bs";
 import { IoIosArrowRoundDown } from "react-icons/io";
+import { IoSearchOutline } from "react-icons/io5";
+import { IoFilterSharp } from "react-icons/io5";
 
 
 
@@ -103,17 +105,17 @@ const Home = () => {
     {
       month: 'Jan',
       orange: '10',
-      black:'40'
+      black:'20'
     },
     {
       month: 'Feb',
       orange: '20',
-      black:'20'
+      black:'10'
     },
     {
       month: 'Mar',
       orange: '20',
-      black:'10'
+      black:'5'
     },
     {
       month: 'Apr',
@@ -122,25 +124,32 @@ const Home = () => {
     },
     {
       month: 'May',
-      orange: '10',
+      orange: '5',
       black:'20'
     },
     {
       month: 'June',
-      orange: '40',
+      orange: '10',
       black:'10'
     },
     {
       month: 'July',
       orange: '10',
-      black:'40'
+      black:'20'
     }
   ]
 
+  const tableTH = [
+  'order','newOrder','againOrder'
+  ]
+
+  tab
+
+
   
   return (
-    <div className='flex-1 h-full text-black px-4 py-6 overflow-y-auto bg-[#f6f6f6] '>
-      <div>
+    <div className='flex-1 h-screen text-black px-4 py-6 bg-[#f6f6f6] overflow-scroll '>
+      <div className='w-full'>
         <motion.h1
         transition={{delay:1, delayChildren:0.5}}
         className='text-4xl inline text-gray-900 tracking-wider font-[500] relative after:absolute after:content-[""] after:bottom-0 after:left-0 after:w-0 after:h-1 after:bg-black after:transition-all after:duration-400 after:ease-in-out hover:after:w-full'>
@@ -159,9 +168,8 @@ const Home = () => {
       <p className='uppercase tracking-wider mt-1'>Stay on top of your tasks, monitor progress, and track status.</p>
       </div>
 
-
-      <section className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-10'>
-        <div className='bg-white flex flex-col max-h-90 rounded-2xl p-4'>
+      <section className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-10 mb-10 auto-rows-fr'>
+        <div className='bg-white flex flex-col max-h-full md:max-h-90 rounded-2xl p-4'>
           {/* head */}
            <div className='w-full flex items-start justify-between'>
               <div className=''>
@@ -212,12 +220,12 @@ const Home = () => {
               </div>
            </div>
         </div>
-        <div className='bg-white max-h-90 rounded-4xl'>
+        <div className='bg-white max-h-full md:max-h-90 rounded-4xl'>
           <div className='grid-cols-1 lg:grid-cols-2 h-full p-4 flex flex-wrap gap-2 overflow-y-auto overflow-x-hidden '>
               {expenses && expenses.map((expense,index)=>(
                 <div
                   onClick={()=>setSelectedDiv(index)}
-                  key={index} className={`relative ${selectedDiv === index ? ' bg-[#ff6a3d] text-white' : 'bg-[#fafafa] text-gray-800'} flex-1 h-40 min-w-50  flex flex-col justify-between rounded-2xl px-3 pt-5 pb-2`}>
+                  key={index} className={`relative ${selectedDiv === index ? ' bg-[#ff6a3d] text-white' : 'bg-[#fafafa] text-gray-800'} flex-1 h-40 min-w-60 md:min-w-50  flex flex-col justify-between rounded-2xl px-3 pt-5 pb-2`}>
                   <div className='flex justify-between items-center'>
                     <h4>{expense.label}</h4>
                       <span className={`p-2 rounded-full ${selectedDiv === index ? 'bg-white/20' : 'bg-[#efeff2]'}`}>{expense.icons}</span>
@@ -233,13 +241,13 @@ const Home = () => {
               }           
           </div>
         </div>
-        <div className='bg-white max-h-90 rounded-4xl'>
+        <div className='bg-white max-h-full md:max-h-90 rounded-4xl'>
           <div className='p-4 flex flex-col h-full gap-3 '>
               <div>
                 <h3 className='text-xl text-black font-[500]'>Total Income</h3>
                 <p className='text-gray-500 text-[13px]'>View your income in a certain period of time</p>
               </div>
-              <div className='h-full w-full flex flex-col bg-[#f4f4f5] rounded-2xl p-3'>
+              <div className='w-full h-full  flex flex-col gap-2 bg-[#f4f4f5] rounded-2xl p-3'>
                 <div className='flex items-center justify-between w-full'>
                   <h2 className='text-lg font-[500]'>Profit and Loss</h2>
                   <div className='flex items-center gap-2'>
@@ -247,7 +255,7 @@ const Home = () => {
                     <span className='text-sm font-[500] flex items-center gap-1'><span className='w-3 h-3 bg-[#18181b] rounded-full'></span>Loss</span>
                   </div>
                 </div>
-                <div className='mt-2 flex h-full  '>
+                <div className=' flex h-full'>
                   <div className='flex flex-col ml-3 pb-2 items-center justify-between'>
                     {chart_amount && chart_amount.map((amount,index)=>(
                       <span key={index} className='text-gray-500 text-[13px]'>
@@ -269,6 +277,64 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <main className='flex gap-4'>
+        <div className='flex flex-1 flex-col h-full'>
+          <div className='w-full bg-white rounded-2xl p-4 flex flex-col justify-between h-32'>
+            <h2 className='font-[500] text-lg tracking-wide'>Money spending limit</h2>
+            <div className='flex flex-col gap-2 w-full'>
+              <div className='relative w-full bg-gray-400 rounded-2xl h-3'><span className='absolute left-0 top-0 w-[70%] h-full bg-amber-400 rounded-2xl'></span></div>
+              <p className='font-[500]'>₦40,319.02 <span className='font-[400] text-gray-500 tracking-wide'>spent out</span> of ₦80,838.03</p>
+            </div>
+          </div>
+
+          {/* cards */}
+          <div className=' flex-1 flex justify-between'>
+            
+          </div>
+        </div>
+        <div className='flex-2'>
+          <div className='w-full h-full flex flex-col gap-5 bg-white rounded-2xl p-4'>
+              <div className='flex justify-between'>
+                <h2 className='font-[500] text-lg tracking-wide'>Recent activities</h2>
+                <div className='flex items-center gap-5'>
+                  {/* search */}
+                  <div className='flex items-center px-5 py-2.5 border border-gray-400 rounded-lg'>
+                    <IoSearchOutline className='w-5 h-5'/>
+                    <input
+                      className='outline-none px-3 text-lg'
+                      placeholder='Search...'
+                      type="text" />
+                  </div>
+                  <div>
+                    <div className='flex items-center border gap-2 border-gray-400 rounded-lg px-3 py-2.5 hover:bg-[#f4f4f5] cursor-pointer'>
+                      <div>
+                        <h2 className='text-[16px] font-[500] text-gray-500 tracking-wide'>Filter</h2>
+                      </div>
+                      <IoFilterSharp />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {/* table */}
+            <div className='w-full h-full border-2 border-gray-300 rounded-xl'>
+              <table>
+                <tr>
+                 {tableTH.map((th)=>(
+                  <th>{th.th}</th>
+                 ))}
+                </tr>
+                <tr>
+                  {tableTH.map((th)=>(
+                    <td>{th.td1}</td>
+                  ))}
+                <td>. . . </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   )
 }

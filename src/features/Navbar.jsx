@@ -10,6 +10,7 @@ const Navbar = ({rotated,rotateArrow,showMessages}) => {
     const [profileNotViewed, setProfileNotViewed] = useState(true)
     const popUpRef = useRef()
     const showPopUpRef = useRef()
+    const [showClickme, setShowClickme] = useState(false)
 
     function showHamburger(){
         setHamburger(prev=>!prev)
@@ -46,25 +47,28 @@ const Navbar = ({rotated,rotateArrow,showMessages}) => {
         </motion.div>
         <div className={`relative flex-1 flex justify-end px-5 items-center ${hamburger ? 'gap-0' : 'gap-5'}`}>
             <motion.div
-                onClick={()=>setProfileNotViewed(false)}
+                onHoverStart={()=>setShowClickme(true)}
+                onHoverEnd={()=>setShowClickme(false)}
                 whileHover={{scale:1.2}}
                 ref={showPopUpRef}
+                onClick={()=>setProfileNotViewed(false)}
                 className=' absolute right-22 w-10 h-10 bg-white rounded-full cursor-pointer mr-4'>
                 <img className='w-full h-full object-cover rounded-full object-top' src="https://cdn.pixabay.com/photo/2020/10/22/06/18/vegeta-5675018_1280.png" alt="" />
             </motion.div>
             {
-                profileNotViewed &&(
+                showClickme && profileNotViewed &&(
                 <motion.span
                     className='absolute hidden sm:inline top-12 z-[10] right-28 sm:top-2 sm:right-36 rounded-[20px] text-center text-gray-900 bg-white px-2 py-[1px]  truncate'
+                    initial={{y:-40}}
                     animate={{
-                        scaleX:[0,1,0]
+                        y:0
                     }}
-                    transition={{repeat: Infinity, duration: 3, repeatType: 'loop', ease: "easeOut"}}
+                    transition={{type:'spring', stiffness: 300, damping: 10}}
                 >
-                Click Me...!
+                Check Profile...!
                 </motion.span>
                 )
-                }
+            }
             <AnimatePresence>
                {profileHover && (
                  <motion.div
