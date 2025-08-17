@@ -15,7 +15,7 @@ const Sidebar = ({rotated,width}) => {
           width: width <= 767 ? rotated ? 0 : '100%' : rotated ? 100 : 250,
           transition: {duration : 0.5},
         }} 
-        className='h-[calc(100%_-_67px)] md:h-full bg-gray-900 absolute md:relative overflow-hidden z-80 '>
+        className='h-[calc(100%_-_60px)] md:h-full bg-gray-900 absolute md:relative overflow-hidden z-80 '>
       <div
         className='w-75 mx-auto  md:m-0 md:w-full h-full flex flex-col px-2 py-8'>
         <ul className='w-full '>

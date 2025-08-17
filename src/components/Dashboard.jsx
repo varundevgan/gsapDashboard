@@ -6,7 +6,7 @@ import Messages from '../features/Messages'
 
 const Dashboard = () => {
 
-  const [rotated, setIsRotated] = useState(false)
+  const [rotated, setIsRotated] = useState(true)
   const [messages, setMessages] = useState(false)
   function rotateArrow(){
     setIsRotated(prev=>!prev)

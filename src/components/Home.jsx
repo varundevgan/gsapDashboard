@@ -143,12 +143,8 @@ const Home = () => {
   'order','newOrder','againOrder'
   ]
 
-  tab
-
-
-  
   return (
-    <div className='flex-1 h-screen text-black px-4 py-6 bg-[#f6f6f6] overflow-scroll '>
+    <div className='flex-1 h-full text-black px-4 py-6 bg-[#f6f6f6] overflow-y-scroll '>
       <div className='w-full'>
         <motion.h1
         transition={{delay:1, delayChildren:0.5}}
@@ -168,7 +164,7 @@ const Home = () => {
       <p className='uppercase tracking-wider mt-1'>Stay on top of your tasks, monitor progress, and track status.</p>
       </div>
 
-      <section className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-10 mb-10 auto-rows-fr'>
+      <section className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-10 mb-10'>
         <div className='bg-white flex flex-col max-h-full md:max-h-90 rounded-2xl p-4'>
           {/* head */}
            <div className='w-full flex items-start justify-between'>
@@ -220,7 +216,7 @@ const Home = () => {
               </div>
            </div>
         </div>
-        <div className='bg-white max-h-full md:max-h-90 rounded-4xl'>
+        <div className='bg-white max-h-100 md:max-h-90 rounded-4xl overflow-y-scroll'>
           <div className='grid-cols-1 lg:grid-cols-2 h-full p-4 flex flex-wrap gap-2 overflow-y-auto overflow-x-hidden '>
               {expenses && expenses.map((expense,index)=>(
                 <div
@@ -241,7 +237,7 @@ const Home = () => {
               }           
           </div>
         </div>
-        <div className='bg-white max-h-full md:max-h-90 rounded-4xl'>
+        <div className='bg-white md:max-h-90 min-h-90 rounded-4xl md:col-span-2 xl:col-span-1'>
           <div className='p-4 flex flex-col h-full gap-3 '>
               <div>
                 <h3 className='text-xl text-black font-[500]'>Total Income</h3>
@@ -293,47 +289,7 @@ const Home = () => {
             
           </div>
         </div>
-        <div className='flex-2'>
-          <div className='w-full h-full flex flex-col gap-5 bg-white rounded-2xl p-4'>
-              <div className='flex justify-between'>
-                <h2 className='font-[500] text-lg tracking-wide'>Recent activities</h2>
-                <div className='flex items-center gap-5'>
-                  {/* search */}
-                  <div className='flex items-center px-5 py-2.5 border border-gray-400 rounded-lg'>
-                    <IoSearchOutline className='w-5 h-5'/>
-                    <input
-                      className='outline-none px-3 text-lg'
-                      placeholder='Search...'
-                      type="text" />
-                  </div>
-                  <div>
-                    <div className='flex items-center border gap-2 border-gray-400 rounded-lg px-3 py-2.5 hover:bg-[#f4f4f5] cursor-pointer'>
-                      <div>
-                        <h2 className='text-[16px] font-[500] text-gray-500 tracking-wide'>Filter</h2>
-                      </div>
-                      <IoFilterSharp />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {/* table */}
-            <div className='w-full h-full border-2 border-gray-300 rounded-xl'>
-              <table>
-                <tr>
-                 {tableTH.map((th)=>(
-                  <th>{th.th}</th>
-                 ))}
-                </tr>
-                <tr>
-                  {tableTH.map((th)=>(
-                    <td>{th.td1}</td>
-                  ))}
-                <td>. . . </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
+
       </main>
     </div>
   )
