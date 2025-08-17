@@ -139,9 +139,36 @@ const Home = () => {
     }
   ]
 
-  const tableTH = [
-  'order','newOrder','againOrder'
-  ]
+ const tableTd = [
+  {
+    order: 'INV_000076',
+    activity: 'Mobile app purchace',
+    price: '₦28,300',
+    status:'Completed',
+    date:'15 Apr, 2026 03:45 PM'
+  },
+  {
+    order: 'INV_000075',
+    activity: 'Hotel booking',
+    price: '₦9,220',
+    status:'Pending',
+    date:'13 Apr, 2026 12:45 PM'
+  },
+  {
+    order: 'INV_000074',
+    activity: 'Flight ticket booking',
+    price: '₦12,500',
+    status:'In progress',
+    date:'11 Apr, 2026 10:45 AM'
+  },
+  {
+    order: 'INV_000073',
+    activity: 'Grocery purchase',
+    price:'₦5,303',
+    status:'Completed',
+    date:'02 Apr, 2026 09:45 PM'
+  },
+ ]
 
   return (
     <div className='flex-1 h-full text-black px-4 py-6 bg-[#f6f6f6] overflow-y-scroll '>
@@ -164,7 +191,7 @@ const Home = () => {
       <p className='uppercase tracking-wider mt-1'>Stay on top of your tasks, monitor progress, and track status.</p>
       </div>
 
-      <section className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-10 mb-10'>
+      <section className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-10 mb-5'>
         <div className='bg-white flex flex-col max-h-full md:max-h-90 rounded-2xl p-4'>
           {/* head */}
            <div className='w-full flex items-start justify-between'>
@@ -274,8 +301,8 @@ const Home = () => {
         </div>
       </section>
 
-      <main className='flex gap-4'>
-        <div className='flex flex-1 flex-col h-full'>
+      <main className='flex max-w-full lg:flex-row flex-col flex-wrap justify-between gap-4 mb-20'>
+        <div className='flex flex-1 flex-col'>
           <div className='w-full bg-white rounded-2xl p-4 flex flex-col justify-between h-32'>
             <h2 className='font-[500] text-lg tracking-wide'>Money spending limit</h2>
             <div className='flex flex-col gap-2 w-full'>
@@ -290,6 +317,56 @@ const Home = () => {
           </div>
         </div>
 
+          {/* table */}
+          <div className='h-full flex-2 flex flex-col gap-4 justify-between bg-white rounded-xl p-4 overflow-scroll'>
+              <div className='h-full w-full flex justify-between'>
+                <div className=''>
+                  <h2 className='text-lg text-gray-900 tracking-wide'>Recent Activities</h2>
+                </div>
+                <div className='flex items-center gap-5'>
+                  <div className='flex items-center  px-4 py-2 border border-gray-300 rounded-lg text-sm'>
+                    <IoSearchOutline />
+                    <input
+                      className='outline-none px-2'
+                      type="text"
+                      placeholder='Search...'
+                    />
+                  </div>
+                    <button className='text-gray-900 text-sm tracking-wide border border-gray-300 rounded-lg gap-4 py-2 px-3 flex items-center cursor-pointer'>
+                      Filter
+                      <IoFilterSharp />
+                    </button>
+                </div>
+              </div>
+
+              <div className='w-full bg-[#f4f4f5] rounded-xl px-4  overflow-scroll'>
+                <table className='w-full justify-start border-separate border-spacing-y-4 border-spacing-x-2'>
+                  <thead>
+                    <tr>
+                    <th className='text-left'><input type="checkbox" /></th>
+                    <th className='text-left'>Order ID</th>
+                    <th className='text-left'>Activity</th>
+                    <th className='text-left'>Price</th>
+                    <th className='text-left'>Status</th>
+                    <th className='text-left'>Date</th>
+                  </tr>
+                  </thead>
+                  <tbody className='h-full w-full '>
+                    {tableTd.map((td,index)=>(
+                      <tr key={index} className='h-10'>
+                        <td className=''><input type="checkbox" /></td>
+                        <td className='min-w-30'>{td.order}</td>
+                        <td className='min-w-60'>{td.activity}</td>
+                        <td className='min-w-30'>{td.price}</td>
+                        <td className='min-w-30'>{td.status}</td>
+                        <td className='min-w-30'>{td.date}</td>
+                        <td className=' text-center'>...</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+          </div>
       </main>
     </div>
   )
