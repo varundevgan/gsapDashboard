@@ -19,10 +19,12 @@ const Tasks = () => {
     },
   ])
 
-  function handleEnd(e){
-    const {active, over} = e
+  function handleDragEnd({active,over}){
+
+    if(!over) return
+    const taskId = active.id
+    const newStatus = over.id
   }
-  
 
   return (
     <div className='w-full h-full text-white'>
@@ -31,7 +33,7 @@ const Tasks = () => {
           <h2 className='text-black text-4xl tracking-wide'>All Tasks</h2>
           <button className='px-4 py-1 rounded-2xl bg-blue-500 cursor-pointer'>Add Task <GoPlus className='mx-auto ' /></button>
         </div>
-        <DndContext collisionDetection={closestCorners}>
+        <DndContext onDragEnd={handleDragEnd}>
           <div className='flex justify-between gap-10 mt-10 text-black'>
             <div className='flex w-full h-screen flex-col border-r border-gray-300'>
               <h2>Pending</h2>
@@ -43,14 +45,8 @@ const Tasks = () => {
               <h2>Done</h2>
               <div className='flex flex-col gap-5 items-center'>
                   {tasks.map((task)=>{
-                    const id = task.id
-                    const {attributes, listeners, setNodeRef, transform, transition} = useSortable({id})
-                    const style = {
-                      transition,
-                      transform : CSS.Transform.toString(transform)
-                    }
                     return(
-                      <div ref={setNodeRef} {...attributes} {...listeners} style={style} key={task.id} className='bg-black h-20 w-[80%] rounded-lg text-white flex items-center justify-center'>{task.title}</div>
+                      <div key={task.id} className='bg-black h-20 w-[80%] rounded-lg text-white flex items-center justify-center'>{task.title}</div>
                     )
                   })}
               </div>
