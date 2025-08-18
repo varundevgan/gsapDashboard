@@ -318,7 +318,7 @@ const Home = () => {
         </div>
 
           {/* table */}
-          <div className='h-full flex-2 flex flex-col gap-4 justify-between bg-white rounded-xl p-4 overflow-scroll'>
+          <div className='h-full flex-[2] flex flex-col gap-4 justify-between bg-white rounded-xl p-4 overflow-scroll'>
               <div className='h-full w-full flex justify-between'>
                 <div className=''>
                   <h2 className='text-lg text-gray-900 tracking-wide'>Recent Activities</h2>
@@ -351,7 +351,7 @@ const Home = () => {
                     <th className='text-left'>Date</th>
                   </tr>
                   </thead>
-                  <tbody className='h-full w-full '>
+                  <tbody className='h-full w-[90%] '>
                     {tableTd.map((td,index)=>(
                       <tr key={index} className='h-10'>
                         <td className=''><input type="checkbox" /></td>
